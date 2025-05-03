@@ -1,7 +1,7 @@
 import enquiryModel from "../Model/enquiry.js";
 import nodemailer from 'nodemailer'
 import { dotenv } from "dotenv";
-Dotenv.config()
+dotenv.config()
 const transporter = nodemailer.createTransport({
   service  : 'gmail',
   auth : {
