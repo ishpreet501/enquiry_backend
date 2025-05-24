@@ -40,6 +40,7 @@ export const loginAdmin = async (req, res) => {
   try {
     const Admin = await AdminModel.findOne({ adminEmail });
 
+    // 🔒 Always check if Admin exists before accessing its fields
     if (!Admin) {
       return res.status(401).json({ success: false, message: "Admin not found" });
     }
