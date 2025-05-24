@@ -35,19 +35,25 @@ export const registerAdmin = async (req, res) => {
     }
   };
   
-export const loginAdmin = async (req,res) => {
-    const {adminEmail,password} = req.body;
-    try {
-        const Admin = await AdminModel.findOne({ adminEmail})
+export const loginAdmin = async (req, res) => {
+  const { adminEmail, password } = req.body;
+  try {
+    const Admin = await AdminModel.findOne({ adminEmail });
 
-      const isMatch = await bcrypt.compare(password, Admin.password);
-          if (!isMatch) {
-            return res.status(401).json({ success: false, message: "Invalid credentials" });
-          }
-          const token = jwt.sign({ id: Admin._id }, "secret", { expiresIn: "1h" });
-          
-              res.json({ success: true, token });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+    if (!Admin) {
+      return res.status(401).json({ success: false, message: "Admin not found" });
     }
-}
+
+    const isMatch = await bcrypt.compare(password, Admin.password);
+    if (!isMatch) {
+      return res.status(401).json({ success: false, message: "Invalid password" });
+    }
+
+    const token = jwt.sign({ id: Admin._id }, "secret", { expiresIn: "1h" });
+
+    res.json({ success: true, token });
+  } catch (error) {
+    console.error("Login error:", error.message);
+    res.status(500).json({ message: "Server error during login" });
+  }
+};
