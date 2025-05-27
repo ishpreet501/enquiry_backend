@@ -6,7 +6,7 @@ import adminRouter from "./Routes/Admin.js";
 const port = 5000;
 const server = express();
 server.use(cors({
-  origin:["http://localhost:5173/","https://enquiry-backend.onrender.com","https://sparkling-snickerdoodle-1cff85.netlify.app/"
+  origin:["http://localhost:5173/","https://enquiry-backend.onrender.com","https://sparkling-snickerdoodle-1cff85.netlify.app"
   ],
   credentials:true
 }))
